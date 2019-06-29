@@ -171,7 +171,7 @@ Features
 --------
 
 * TODO
-- Create a class for extracting the defaul UUID token
+- Create a class for extracting the default UUID token
 - Added social buttons with link and token
 
 Running Tests
