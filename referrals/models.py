@@ -13,6 +13,16 @@ from treebeard.mp_tree import MP_Node
 @python_2_unicode_compatible
 class FlatReferral(models.Model):
 
+    REFERRAL_STATUS_PENDING = 'P'
+    REFERRAL_STATUS_REJECTED = 'R'
+    REFERRAL_STATUS_CONFIRM = 'C'
+    REFERRAL_STATUS_DEFAULT = REFERRAL_STATUS_PENDING
+    REFERRAL_STATUS_CHOICES = (
+        (REFERRAL_STATUS_PENDING, 'Pending'), 
+        (REFERRAL_STATUS_REJECTED, 'Rejected'),
+        (REFERRAL_STATUS_CONFIRM, 'Confirm') 
+    )
+
     referrer = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
@@ -23,6 +33,8 @@ class FlatReferral(models.Model):
         on_delete=models.CASCADE,
         related_name='referrers'
     )
+    expires_at = models.DateTimeField(auto_now=False, auto_now_add=False)
+    status = models.CharField(max_length=2, choices=REFERRAL_STATUS_CHOICES, default=REFERRAL_STATUS_DEFAULT)
 
     class Meta:
         unique_together = (('referrer', 'referred'),)
